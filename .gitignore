@@ -1,0 +1,12 @@
+*.iml
+.gradle
+.idea/*
+!.idea/detekt.xml
+.DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+local.properties
+xcuserdata
+.kotlin
