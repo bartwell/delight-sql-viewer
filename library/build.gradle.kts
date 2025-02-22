@@ -111,7 +111,7 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
                 username = findProperty("ossrhUsername") as String? ?: System.getenv("OSSRH_USERNAME")
                 password = findProperty("ossrhPassword") as String? ?: System.getenv("OSSRH_PASSWORD")
