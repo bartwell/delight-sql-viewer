@@ -82,5 +82,10 @@ publishing {
 }
 
 signing {
+    useInMemoryPgpKeys(
+        findProperty("signingKeyId") as String? ?: System.getenv("SIGNING_KEY_ID"),
+        findProperty("signingSecretKey") as String? ?: System.getenv("SIGNING_SECRET_KEY"),
+        findProperty("signingPassword") as String? ?: System.getenv("SIGNING_PASSWORD")
+    )
     sign(publishing.publications)
 }
