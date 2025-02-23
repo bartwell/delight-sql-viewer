@@ -7,7 +7,7 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import ru.bartwell.delightsqlviewer.AndroidEnvironmentProvider
 import ru.bartwell.delightsqlviewer.EnvironmentProvider
-import ru.bartwell.delightsqlviewer.MainActivity
+import ru.bartwell.delightsqlviewer.DelightSqlViewerActivity
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal actual object ShortcutManager {
@@ -16,7 +16,7 @@ internal actual object ShortcutManager {
             val provider = environmentProvider as AndroidEnvironmentProvider
             val context = provider.getContext()
             context.getSystemService(ShortcutManager::class.java)?.let { shortcutManager ->
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, DelightSqlViewerActivity::class.java)
                 intent.setAction(Intent.ACTION_VIEW)
                 val shortcut = ShortcutInfo.Builder(context, id)
                     .setShortLabel(title)

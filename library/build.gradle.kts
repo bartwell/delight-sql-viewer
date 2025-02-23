@@ -89,7 +89,7 @@ kotlin {
 
 android {
     namespace = "ru.bartwell.delightsqlviewer"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24

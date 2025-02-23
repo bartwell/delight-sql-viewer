@@ -119,7 +119,7 @@ private fun Card(
         }
 
         ColumnType.TEXT, ColumnType.BLOB -> {
-            keyboardType = KeyboardType.Unspecified
+            keyboardType = KeyboardType.Text
             isSingleLine = false
         }
     }
@@ -130,7 +130,7 @@ private fun Card(
         imeAction = ImeAction.Done
         keyboardActions = KeyboardActions(onDone = { onSaveClick() })
     } else {
-        imeAction = ImeAction.Next
+        imeAction = if (column.type == ColumnType.TEXT) ImeAction.Default else ImeAction.Next
         keyboardActions = KeyboardActions.Default
     }
     OutlinedCard(
