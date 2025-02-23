@@ -2,9 +2,7 @@
 
     <application>
         <activity
-            android:name="ru.bartwell.delightsqlviewer.MainActivity"
-            android:exported="false"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.DelightSQLViewer" />
+            android:name=".DelightSqlViewerActivity"
+            android:exported="false" />
     </application>
 </manifest>

@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.arkivanov.decompose.defaultComponentContext
 import ru.bartwell.delightsqlviewer.core.component.DefaultRootComponent
 
-public class MainActivity : ComponentActivity() {
+public class DelightSqlViewerActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
