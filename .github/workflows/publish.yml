@@ -33,11 +33,23 @@ jobs:
           echo "libraryVersionName=${{ steps.get_version.outputs.version }}" > version.properties
           cat version.properties
 
-      - name: Publish to Maven Central
-        run: ./gradlew publish
+#      - name: Publish to Maven Central
+#        run: ./gradlew publish
+#        env:
+#          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+#          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+#          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+#          SIGNING_SECRET_KEY: ${{ secrets.SIGNING_SECRET_KEY }}
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body: ""
+          draft: false
+          prerelease: false
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_SECRET_KEY: ${{ secrets.SIGNING_SECRET_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
