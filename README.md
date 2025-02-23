@@ -2,6 +2,25 @@
 
 **Delight SQL Viewer** is a Kotlin Multiplatform library for Android, iOS, and Desktop applications. It allows developers and testers to view, edit, add, and delete records in a [SQLDelight](https://github.com/cashapp/sqldelight)-based database directly within the application. This is particularly useful for debugging and QA purposes to quickly inspect and modify the app’s database state in real-time.
 
+## Screenshots
+
+<a href="content/screenshots/tables_list.png" target="_blank" rel="noopener noreferrer">
+  <img src="content/screenshots/tables_list.png" alt="tables_list" width="120">
+</a>
+<a href="content/screenshots/table_content.png" target="_blank" rel="noopener noreferrer">
+  <img src="content/screenshots/table_content.png" alt="table_content" width="120">
+</a>
+<a href="content/screenshots/insert_row.png" target="_blank" rel="noopener noreferrer">
+  <img src="content/screenshots/insert_row.png" alt="insert_row" width="120">
+</a>
+<a href="content/screenshots/update_value.png" target="_blank" rel="noopener noreferrer">
+  <img src="content/screenshots/update_value.png" alt="update_value" width="120">
+</a>
+<a href="content/screenshots/delete_rows.png" target="_blank" rel="noopener noreferrer">
+  <img src="content/screenshots/delete_rows.png" alt="delete_rows" width="120">
+</a>
+
+
 ## Features
 
 - **Multiplatform Support**: Works on Android, iOS, and Desktop targets.
