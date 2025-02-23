@@ -72,7 +72,7 @@ publishing {
     repositories {
         maven {
             name = "OSSRH"
-            url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
                 username = findProperty("ossrhUsername") as String? ?: System.getenv("OSSRH_USERNAME")
                 password = findProperty("ossrhPassword") as String? ?: System.getenv("OSSRH_PASSWORD")
@@ -82,5 +82,10 @@ publishing {
 }
 
 signing {
+    useInMemoryPgpKeys(
+        findProperty("signingKeyId") as String? ?: System.getenv("SIGNING_KEY_ID"),
+        findProperty("signingSecretKey") as String? ?: System.getenv("SIGNING_SECRET_KEY"),
+        findProperty("signingPassword") as String? ?: System.getenv("SIGNING_PASSWORD")
+    )
     sign(publishing.publications)
 }
