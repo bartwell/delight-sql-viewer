@@ -6,8 +6,8 @@ import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
 import ru.bartwell.delightsqlviewer.AndroidEnvironmentProvider
-import ru.bartwell.delightsqlviewer.EnvironmentProvider
 import ru.bartwell.delightsqlviewer.DelightSqlViewerActivity
+import ru.bartwell.delightsqlviewer.EnvironmentProvider
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal actual object ShortcutManager {
