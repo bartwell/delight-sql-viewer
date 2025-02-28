@@ -35,28 +35,12 @@ kotlin {
 
     jvm()
 
-    sourceSets {
-        val commonMain by getting
-        val androidMain by getting {
-            dependsOn(commonMain)
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-    }
-
     explicitApi()
 }
 
 android {
     namespace = "ru.bartwell.delightsqlviewer"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 24
