@@ -10,7 +10,7 @@ import ru.bartwell.delightsqlviewer.DelightSqlViewerActivity
 import ru.bartwell.delightsqlviewer.EnvironmentProvider
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-public actual object ShortcutManager {
+internal actual object ShortcutManager {
     internal actual fun setup(environmentProvider: EnvironmentProvider) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val provider = environmentProvider as AndroidEnvironmentProvider
