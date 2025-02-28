@@ -28,7 +28,7 @@ internal object IosSceneController {
         val lifecycle = LifecycleRegistry()
         val componentContext = DefaultComponentContext(lifecycle)
         val rootComponent = DefaultRootComponent(componentContext)
-        val uiViewController = ComposeUIViewController {
+        val uiViewController = ComposeUIViewController(configure = { enforceStrictPlistSanityCheck = false }) {
             App(rootComponent)
         }
         lifecycle.create()
