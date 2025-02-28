@@ -46,51 +46,32 @@ kotlin {
     jvm()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                if (isRelease) {
-                    api(projects.stub)
-                } else {
-                    api(projects.library)
-                }
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(libs.decompose)
-                implementation(libs.decompose.extensions.compose)
+        commonMain.dependencies {
+            if (isRelease) {
+                api(projects.stub)
+            } else {
+                api(projects.library)
             }
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(libs.decompose)
+            implementation(libs.decompose.extensions.compose)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
-        val androidMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.sqldelight.android.driver)
-            }
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.sqldelight.android.driver)
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.sqldelight.native.driver)
-            }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.native.driver)
         }
-        val jvmMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(libs.sqldelight.driver.sqlite)
-            }
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.sqldelight.driver.sqlite)
         }
     }
 }

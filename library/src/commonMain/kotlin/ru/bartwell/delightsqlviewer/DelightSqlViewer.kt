@@ -3,6 +3,7 @@ package ru.bartwell.delightsqlviewer
 import app.cash.sqldelight.db.SqlDriver
 import ru.bartwell.delightsqlviewer.core.util.LaunchManager
 import ru.bartwell.delightsqlviewer.core.util.ShortcutManager
+import ru.bartwell.delightsqlviewer.core.util.id
 
 public object DelightSqlViewer {
 
@@ -26,4 +27,6 @@ public object DelightSqlViewer {
     public fun launch() {
         environmentProvider?.let { LaunchManager.launch(it) }
     }
+
+    public fun getShortcutId(): String = ShortcutManager.id
 }

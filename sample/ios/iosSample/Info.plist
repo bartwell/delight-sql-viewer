@@ -44,7 +44,5 @@
 	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-    <true/>
 </dict>
 </plist>

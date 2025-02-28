@@ -40,8 +40,7 @@ kotlin {
     jvm()
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
+         commonMain.dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material3)
@@ -50,38 +49,20 @@ kotlin {
                 implementation(libs.decompose.extensions.compose)
                 implementation(libs.decompose.essenty.lifecycle.coroutines)
             }
-        }
-        val commonTest by getting {
-            dependencies {
+        commonTest.dependencies {
                 implementation(libs.kotlin.test)
             }
-        }
-        val androidMain by getting {
-            dependsOn(commonMain)
-            dependencies {
+         androidMain.dependencies {
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.sqldelight.android.driver)
             }
-        }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
+        appleMain.dependencies {
                 implementation(libs.sqldelight.native.driver)
-            }
         }
-        val jvmMain by getting {
-            dependsOn(commonMain)
-            dependencies {
+        jvmMain.dependencies {
                 implementation(compose.desktop.currentOs)
                 implementation(libs.sqldelight.driver.sqlite)
             }
-        }
     }
 
     explicitApi()
