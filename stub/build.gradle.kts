@@ -35,6 +35,12 @@ kotlin {
 
     jvm()
 
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.core)
+        }
+    }
+
     explicitApi()
 }
 

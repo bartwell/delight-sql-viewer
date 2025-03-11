@@ -7,11 +7,11 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import ru.bartwell.delightsqlviewer.AndroidEnvironmentProvider
 import ru.bartwell.delightsqlviewer.DelightSqlViewerActivity
-import ru.bartwell.delightsqlviewer.EnvironmentProvider
+import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal actual object ShortcutManager {
-    internal actual fun setup(environmentProvider: EnvironmentProvider) {
+    internal actual fun setup(environmentProvider: EnvironmentProvider<*>) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val provider = environmentProvider as AndroidEnvironmentProvider
             val context = provider.getContext()

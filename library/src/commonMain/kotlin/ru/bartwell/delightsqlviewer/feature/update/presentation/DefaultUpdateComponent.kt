@@ -8,10 +8,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.core.extension.querySingle
-import ru.bartwell.delightsqlviewer.core.extension.updateSingle
-import ru.bartwell.delightsqlviewer.feature.update.data.SingleValueSqlMapper
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
+import ru.bartwell.delightsqlviewer.core.data.Column
+import ru.bartwell.delightsqlviewer.core.mapper.SingleStringSqlMapper
 
 internal class DefaultUpdateComponent(
     componentContext: ComponentContext,
@@ -42,7 +40,7 @@ internal class DefaultUpdateComponent(
         DelightSqlViewer.getDriver()
             .querySingle(
                 "SELECT $columnName FROM $table WHERE $rowIdColumn = $rowId;",
-                SingleValueSqlMapper(model.value.column)
+                SingleStringSqlMapper(model.value.column)
             )
             .onEach { value ->
                 if (value == null) {

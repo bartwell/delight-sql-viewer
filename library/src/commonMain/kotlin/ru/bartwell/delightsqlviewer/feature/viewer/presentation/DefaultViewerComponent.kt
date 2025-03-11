@@ -9,11 +9,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
 import ru.bartwell.delightsqlviewer.core.component.Resumable
-import ru.bartwell.delightsqlviewer.core.extension.delete
-import ru.bartwell.delightsqlviewer.core.extension.query
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
-import ru.bartwell.delightsqlviewer.feature.viewer.data.ColumnsSqlMapper
-import ru.bartwell.delightsqlviewer.feature.viewer.data.RowsSqlMapper
+import ru.bartwell.delightsqlviewer.core.data.Column
+import ru.bartwell.delightsqlviewer.core.mapper.ColumnsSqlMapper
+import ru.bartwell.delightsqlviewer.core.mapper.RowsSqlMapper
 
 internal class DefaultViewerComponent(
     componentContext: ComponentContext,
@@ -33,7 +31,6 @@ internal class DefaultViewerComponent(
 
     private fun updateTable() {
         loadColumns()
-        loadRows()
     }
 
     private fun loadColumns() {
@@ -42,6 +39,7 @@ internal class DefaultViewerComponent(
             .query("PRAGMA table_info($table);", ColumnsSqlMapper())
             .onEach { columns ->
                 _model.value = _model.value.copy(columns = columns + listOf(Column.ROW_ID_COLUMN))
+                loadRows()
             }
             .catch { _model.value = _model.value.copy(loadError = it.toString()) }
             .launchIn(coroutineScope())

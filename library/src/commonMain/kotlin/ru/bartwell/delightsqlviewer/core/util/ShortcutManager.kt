@@ -1,10 +1,10 @@
 package ru.bartwell.delightsqlviewer.core.util
 
-import ru.bartwell.delightsqlviewer.EnvironmentProvider
+import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal expect object ShortcutManager {
-    internal fun setup(environmentProvider: EnvironmentProvider)
+    internal fun setup(environmentProvider: EnvironmentProvider<*>)
 }
 
 internal val ShortcutManager.id: String

@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.core.extension.insert
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
+import ru.bartwell.delightsqlviewer.core.data.Column
 
 internal class DefaultInsertComponent(
     componentContext: ComponentContext,

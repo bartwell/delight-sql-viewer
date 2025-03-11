@@ -1,7 +1,7 @@
 package ru.bartwell.delightsqlviewer.feature.viewer.presentation
 
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Row
+import ru.bartwell.delightsqlviewer.core.data.Column
+import ru.bartwell.delightsqlviewer.core.data.Row
 
 internal data class ViewerState(
     val table: String,

@@ -3,7 +3,7 @@ CREATE TABLE table2 (
     title TEXT NOT NULL DEFAULT '',
     quantity INTEGER NOT NULL DEFAULT 0,
     price REAL NOT NULL DEFAULT 0,
-    image BLOB NOT NULL DEFAULT (CAST('' AS BLOB))
+    image BLOB NOT NULL DEFAULT 1234
 );
 
 INSERT INTO table2 (title, quantity, price, image) VALUES ('Product A', 100, 9.99, CAST('AABBCCDD' AS BLOB));

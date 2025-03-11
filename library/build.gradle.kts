@@ -40,29 +40,30 @@ kotlin {
     jvm()
 
     sourceSets {
-         commonMain.dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.materialIconsExtended)
-                implementation(libs.decompose)
-                implementation(libs.decompose.extensions.compose)
-                implementation(libs.decompose.essenty.lifecycle.coroutines)
-            }
+        commonMain.dependencies {
+            implementation(projects.core)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+            implementation(libs.decompose)
+            implementation(libs.decompose.extensions.compose)
+            implementation(libs.decompose.essenty.lifecycle.coroutines)
+        }
         commonTest.dependencies {
-                implementation(libs.kotlin.test)
-            }
-         androidMain.dependencies {
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.sqldelight.android.driver)
-            }
+            implementation(libs.kotlin.test)
+        }
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.sqldelight.android.driver)
+        }
         appleMain.dependencies {
-                implementation(libs.sqldelight.native.driver)
+            implementation(libs.sqldelight.native.driver)
         }
         jvmMain.dependencies {
-                implementation(compose.desktop.currentOs)
-                implementation(libs.sqldelight.driver.sqlite)
-            }
+            implementation(compose.desktop.currentOs)
+            implementation(libs.sqldelight.driver.sqlite)
+        }
     }
 
     explicitApi()
@@ -98,8 +99,10 @@ publishing {
         artifact(javadocJar)
         pom {
             name.set("Delight SQL Viewer")
-            description.set("Delight SQL Viewer is a multiplatform library that integrates database " +
-                    "viewing and editing into your application")
+            description.set(
+                "Delight SQL Viewer is a multiplatform library that integrates database " +
+                        "viewing and editing into your application"
+            )
             url.set("https://github.com/bartwell/delight-sql-viewer")
             licenses {
                 license {

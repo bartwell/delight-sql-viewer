@@ -15,9 +15,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import ru.bartwell.delightsqlviewer.core.data.ColumnType
 import ru.bartwell.delightsqlviewer.core.presentation.CheckboxWithText
 import ru.bartwell.delightsqlviewer.core.presentation.ErrorBox
-import ru.bartwell.delightsqlviewer.feature.viewer.data.ColumnType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

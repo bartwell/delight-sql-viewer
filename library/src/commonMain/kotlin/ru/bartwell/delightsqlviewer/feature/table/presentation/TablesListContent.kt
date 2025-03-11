@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import ru.bartwell.delightsqlviewer.core.presentation.ErrorBox
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,18 +41,20 @@ internal fun TablesListContent(
                 }
             }
         )
-        LazyColumn(
-            state = rememberLazyListState(),
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            items(state.tables) { table ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { component.onListItemClicked(table) }
-                        .padding(16.dp)
-                ) {
-                    Text(table)
+        ErrorBox(modifier = Modifier.fillMaxSize(), error = state.error) {
+            LazyColumn(
+                state = rememberLazyListState(),
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                items(state.tables) { table ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { component.onListItemClicked(table) }
+                            .padding(16.dp)
+                    ) {
+                        Text(table)
+                    }
                 }
             }
         }

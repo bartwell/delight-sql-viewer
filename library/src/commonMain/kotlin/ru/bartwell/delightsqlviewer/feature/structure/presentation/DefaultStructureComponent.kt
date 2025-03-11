@@ -8,8 +8,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.core.extension.query
-import ru.bartwell.delightsqlviewer.feature.viewer.data.ColumnsSqlMapper
+import ru.bartwell.delightsqlviewer.core.mapper.ColumnsSqlMapper
 
 internal class DefaultStructureComponent(
     componentContext: ComponentContext,

@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.core.extension.query
 import ru.bartwell.delightsqlviewer.core.mapper.StringSqlMapper
 
 internal class DefaultTablesListComponent(
@@ -21,7 +20,8 @@ internal class DefaultTablesListComponent(
 
     init {
         val sql = "SELECT name FROM sqlite_master WHERE type='table' " +
-            "AND name NOT IN ('sqlite_sequence', 'sqlite_stat1', 'sqlite_stat4', 'android_metadata');"
+            "AND name NOT IN ('sqlite_sequence', 'sqlite_stat1', " +
+            "'sqlite_stat4', 'android_metadata', 'room_master_table');"
         DelightSqlViewer.getDriver()
             .query(sql, StringSqlMapper())
             .onEach { _model.value = _model.value.copy(tables = it) }

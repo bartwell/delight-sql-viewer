@@ -8,11 +8,11 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
+import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.feature.insert.presentation.DefaultInsertComponent
 import ru.bartwell.delightsqlviewer.feature.structure.presentation.DefaultStructureComponent
 import ru.bartwell.delightsqlviewer.feature.table.presentation.DefaultTablesListComponent
 import ru.bartwell.delightsqlviewer.feature.update.presentation.DefaultUpdateComponent
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
 import ru.bartwell.delightsqlviewer.feature.viewer.presentation.DefaultViewerComponent
 
 internal class DefaultRootComponent(

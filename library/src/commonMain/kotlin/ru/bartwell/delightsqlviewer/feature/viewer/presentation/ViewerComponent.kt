@@ -2,7 +2,7 @@ package ru.bartwell.delightsqlviewer.feature.viewer.presentation
 
 import com.arkivanov.decompose.value.Value
 import ru.bartwell.delightsqlviewer.core.component.Component
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
+import ru.bartwell.delightsqlviewer.core.data.Column
 
 internal interface ViewerComponent : Component {
     val model: Value<ViewerState>

@@ -51,10 +51,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.min
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.extension.orNull
 import ru.bartwell.delightsqlviewer.core.presentation.ErrorAlert
 import ru.bartwell.delightsqlviewer.core.presentation.ErrorBox
-import ru.bartwell.delightsqlviewer.feature.viewer.data.Column
 
 private val MAX_CELL_WIDTH = 200.dp
 private val CELL_PADDING = 8.dp

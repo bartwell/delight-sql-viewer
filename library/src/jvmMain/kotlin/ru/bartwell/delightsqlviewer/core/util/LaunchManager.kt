@@ -6,8 +6,7 @@ import androidx.compose.ui.awt.ComposeWindow
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import ru.bartwell.delightsqlviewer.App
-import ru.bartwell.delightsqlviewer.DesktopEnvironmentProvider
-import ru.bartwell.delightsqlviewer.EnvironmentProvider
+import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 import ru.bartwell.delightsqlviewer.core.component.DefaultRootComponent
 import java.awt.Dimension
 
@@ -19,8 +18,8 @@ internal val LocalComposeWindow = staticCompositionLocalOf<ComposeWindow?> { nul
 
 @Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 internal actual object LaunchManager {
-    actual fun launch(environmentProvider: EnvironmentProvider) {
-        environmentProvider as DesktopEnvironmentProvider
+    actual fun launch(environmentProvider: EnvironmentProvider<*>) {
+//        environmentProvider as DesktopEnvironmentProvider
         val lifecycle = LifecycleRegistry()
         val componentContext = DefaultComponentContext(lifecycle)
         val rootComponent = DefaultRootComponent(componentContext)
