@@ -60,7 +60,7 @@ kotlin {
    sourceSets {
       val commonMain by getting {
          dependencies {
-              api("ru.bartwell.delightsqlviewer:library:2.0.0")
+              api("ru.bartwell.delightsqlviewer:runtime:2.0.0")
               api("ru.bartwell.delightsqlviewer:core:2.0.0")
               // Choose the adapter based on your database:
               api("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
@@ -78,7 +78,7 @@ For iOS, export the dependencies in your `framework {}` block to make them avail
 // In shared/build.gradle.kts
 
 framework {
-     export("ru.bartwell.delightsqlviewer:library:2.0.0")
+     export("ru.bartwell.delightsqlviewer:runtime:2.0.0")
      export("ru.bartwell.delightsqlviewer:core:2.0.0")
      // Choose the adapter based on your database:
      export("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
@@ -232,7 +232,7 @@ framework {
        export("ru.bartwell.delightsqlviewer:stub:2.0.0")
    } else {
        // Use the full implementation for debug builds.
-       export("ru.bartwell.delightsqlviewer:library:2.0.0")
+       export("ru.bartwell.delightsqlviewer:runtime:2.0.0")
        export("ru.bartwell.delightsqlviewer:core:2.0.0")
        // Choose the appropriate adapter:
        export("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
@@ -249,7 +249,7 @@ dependencies {
     if (isRelease) {
         api("ru.bartwell.delightsqlviewer:stub:2.0.0")
     } else {
-        api("ru.bartwell.delightsqlviewer:library:2.0.0")
+        api("ru.bartwell.delightsqlviewer:runtime:2.0.0")
         api("ru.bartwell.delightsqlviewer:core:2.0.0")
         // Choose the appropriate adapter:
         api("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
