@@ -32,7 +32,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "library"
+            baseName = "runtime"
             isStatic = true
         }
     }

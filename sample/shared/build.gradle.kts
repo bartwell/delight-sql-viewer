@@ -40,7 +40,7 @@ kotlin {
             if (isRelease) {
                 export(projects.stub)
             } else {
-                export(projects.library)
+                export(projects.runtime)
                 export(projects.core)
                 export(projects.sqldelightAdapter)
                 export(projects.roomAdapter)
@@ -55,7 +55,7 @@ kotlin {
             if (isRelease) {
                 api(projects.stub)
             } else {
-                api(projects.library)
+                api(projects.runtime)
                 api(projects.core)
                 api(projects.sqldelightAdapter)
                 api(projects.roomAdapter)
