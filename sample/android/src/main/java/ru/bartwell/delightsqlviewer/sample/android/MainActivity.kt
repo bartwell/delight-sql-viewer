@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.SqlDelightEnvironmentProvider
 import ru.bartwell.delightsqlviewer.adapter.room.RoomEnvironmentProvider
+import ru.bartwell.delightsqlviewer.adapter.sqldelight.SqlDelightEnvironmentProvider
 import ru.bartwell.delightsqlviewer.sample.shared.App
 import ru.bartwell.delightsqlviewer.sample.shared.DatabaseInitializer
 import ru.bartwell.delightsqlviewer.sample.shared.database.room.AppDatabase

@@ -1,6 +1,6 @@
 package ru.bartwell.delightsqlviewer
 
-import ru.bartwell.delightsqlviewer.core.DbWrapper
+import ru.bartwell.delightsqlviewer.core.DatabaseWrapper
 import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 import ru.bartwell.delightsqlviewer.core.util.LaunchManager
 import ru.bartwell.delightsqlviewer.core.util.ShortcutManager
@@ -21,7 +21,7 @@ public object DelightSqlViewer {
         }
     }
 
-    internal fun getDriver(): DbWrapper {
+    internal fun getDriver(): DatabaseWrapper {
         val driver = environmentProvider?.getWrapper()
         requireNotNull(driver) { "Driver is null. Did you call DelightSqlViewer.init()?" }
         return driver

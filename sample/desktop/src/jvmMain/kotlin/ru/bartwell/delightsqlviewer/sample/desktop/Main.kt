@@ -7,7 +7,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.RoomEnvironmentProvider
+import ru.bartwell.delightsqlviewer.adapter.room.RoomEnvironmentProvider
 import ru.bartwell.delightsqlviewer.adapter.sqldelight.SqlDelightEnvironmentProvider
 import ru.bartwell.delightsqlviewer.sample.shared.App
 import ru.bartwell.delightsqlviewer.sample.shared.DatabaseInitializer

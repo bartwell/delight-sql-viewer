@@ -5,12 +5,12 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.db.SqlPreparedStatement
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.bartwell.delightsqlviewer.core.DbWrapper
+import ru.bartwell.delightsqlviewer.core.DatabaseWrapper
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.data.ColumnType
 import ru.bartwell.delightsqlviewer.core.mapper.SqlMapper
 
-public class SqlDelightWrapper(private val driver: SqlDriver) : DbWrapper() {
+public class SqlDelightWrapper(private val driver: SqlDriver) : DatabaseWrapper() {
 
     override fun <T> query(sql: String, mapper: SqlMapper<T>): Flow<List<T>> = flow {
         val result = driver.executeQuery(

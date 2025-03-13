@@ -14,9 +14,6 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Выберите базу данных")
-                .font(.headline)
-            
             Picker("Select database", selection: $selectedDatabase) {
                 ForEach(DatabaseType.allCases) { db in
                     Text(db.rawValue).tag(db)

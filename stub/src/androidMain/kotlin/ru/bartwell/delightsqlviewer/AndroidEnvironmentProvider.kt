@@ -1,7 +1,8 @@
 package ru.bartwell.delightsqlviewer
 
 import android.content.Context
+import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 
-public interface AndroidEnvironmentProvider : EnvironmentProvider {
-    public fun getContext(): Context
+internal interface AndroidEnvironmentProvider : EnvironmentProvider<Any> {
+    fun getContext(): Context
 }

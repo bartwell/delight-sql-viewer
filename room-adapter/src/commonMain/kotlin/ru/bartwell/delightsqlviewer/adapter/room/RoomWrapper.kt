@@ -6,12 +6,12 @@ import androidx.room.useWriterConnection
 import androidx.sqlite.SQLiteStatement
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.bartwell.delightsqlviewer.core.DbWrapper
+import ru.bartwell.delightsqlviewer.core.DatabaseWrapper
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.data.ColumnType
 import ru.bartwell.delightsqlviewer.core.mapper.SqlMapper
 
-public class RoomWrapper(internal val database: RoomDatabase) : DbWrapper() {
+public class RoomWrapper(internal val database: RoomDatabase) : DatabaseWrapper() {
 
     override fun <T> query(sql: String, mapper: SqlMapper<T>): Flow<List<T>> = flow {
         val result = mutableListOf<T>()

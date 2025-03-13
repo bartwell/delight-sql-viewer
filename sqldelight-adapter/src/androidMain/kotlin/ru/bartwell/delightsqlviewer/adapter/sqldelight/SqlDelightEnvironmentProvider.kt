@@ -1,9 +1,9 @@
 package ru.bartwell.delightsqlviewer.adapter.sqldelight
 
 import app.cash.sqldelight.db.SqlDriver
+import ru.bartwell.delightsqlviewer.AndroidEnvironmentProvider
 import ru.bartwell.delightsqlviewer.core.DatabaseWrapper
-import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
 
-public abstract class SqlDelightEnvironmentProvider : EnvironmentProvider<SqlDriver> {
+public abstract class SqlDelightEnvironmentProvider : AndroidEnvironmentProvider<SqlDriver> {
     final override fun getWrapper(): DatabaseWrapper = SqlDelightWrapper(getDriver())
 }

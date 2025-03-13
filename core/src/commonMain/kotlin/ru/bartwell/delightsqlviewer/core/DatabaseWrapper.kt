@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.mapper.SqlMapper
 
-public abstract class DbWrapper {
+public abstract class DatabaseWrapper {
     public abstract fun <T> query(sql: String, mapper: SqlMapper<T>): Flow<List<T>>
     public abstract fun <T> querySingle(sql: String, mapper: SqlMapper<T>): Flow<T?>
     public abstract fun updateSingle(table: String, id: Long, column: Column, value: String?): Flow<Unit>
