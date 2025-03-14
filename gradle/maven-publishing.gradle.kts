@@ -3,7 +3,6 @@ import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.publish.maven.tasks.PublishToMavenLocal
 import org.gradle.api.publish.maven.tasks.PublishToMavenRepository
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.plugins.signing.Sign
 import org.gradle.plugins.signing.SigningExtension
 
 plugins.withId("maven-publish") {
@@ -43,7 +42,6 @@ plugins.withId("maven-publish") {
                 }
             }
         }
-
         repositories {
             maven {
                 name = "OSSRH"
@@ -67,13 +65,15 @@ plugins.withId("signing") {
             findProperty("signingPassword") as String? ?: System.getenv("SIGNING_PASSWORD")
         )
         val publishingExtension = project.extensions.getByType(PublishingExtension::class.java)
-        sign(*publishingExtension.publications.toTypedArray())
+        publishingExtension.publications.configureEach {
+            sign(this)
+        }
     }
 }
 
 tasks.withType<PublishToMavenLocal>().configureEach {
-    dependsOn(tasks.withType<Sign>())
+    dependsOn(tasks.withType(org.gradle.plugins.signing.Sign::class.java))
 }
 tasks.withType<PublishToMavenRepository>().configureEach {
-    dependsOn(tasks.withType<Sign>())
+    dependsOn(tasks.withType(org.gradle.plugins.signing.Sign::class.java))
 }
