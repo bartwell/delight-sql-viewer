@@ -1,0 +1,5 @@
+package ru.bartwell.delightsqlviewer.adapter.sqldelight
+
+import ru.bartwell.delightsqlviewer.AndroidEnvironmentProvider
+
+public abstract class SqlDelightEnvironmentProvider : AndroidEnvironmentProvider

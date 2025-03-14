@@ -4,9 +4,11 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.room)
 }
 
 /*
@@ -38,7 +40,10 @@ kotlin {
             if (isRelease) {
                 export(projects.stub)
             } else {
-                export(projects.library)
+                export(projects.runtime)
+                export(projects.core)
+                export(projects.sqldelightAdapter)
+                export(projects.roomAdapter)
             }
         }
     }
@@ -50,7 +55,10 @@ kotlin {
             if (isRelease) {
                 api(projects.stub)
             } else {
-                api(projects.library)
+                api(projects.runtime)
+                api(projects.core)
+                api(projects.sqldelightAdapter)
+                api(projects.roomAdapter)
             }
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -58,6 +66,9 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose)
+            api(libs.room.runtime)
+            implementation(libs.room.driver)
+            implementation(libs.kotlinx.coroutines.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -92,6 +103,18 @@ android {
     buildFeatures {
         compose = true
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+    add("kspJvm", libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 sqldelight {

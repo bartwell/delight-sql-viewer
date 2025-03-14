@@ -7,15 +7,30 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
-import ru.bartwell.delightsqlviewer.DesktopEnvironmentProvider
+import ru.bartwell.delightsqlviewer.adapter.room.RoomEnvironmentProvider
+import ru.bartwell.delightsqlviewer.adapter.sqldelight.SqlDelightEnvironmentProvider
 import ru.bartwell.delightsqlviewer.sample.shared.App
-import ru.bartwell.delightsqlviewer.sample.shared.DriverFactory
+import ru.bartwell.delightsqlviewer.sample.shared.DatabaseInitializer
+import ru.bartwell.delightsqlviewer.sample.shared.database.room.AppDatabase
+import ru.bartwell.delightsqlviewer.sample.shared.database.room.DatabaseBuilder
+import ru.bartwell.delightsqlviewer.sample.shared.database.sqldelight.DriverFactory
 
-fun main(args: Array<String>) = application {
-    val sqlDriver = DriverFactory().createDriver()
-    DelightSqlViewer.init(object : DesktopEnvironmentProvider {
-        override fun getSqlDriver() = sqlDriver
-    })
+fun main() = application {
+    val databaseInitializer = object : DatabaseInitializer {
+        override fun initSqlDelight() {
+            val sqlDelightDriver = DriverFactory().createDriver()
+            DelightSqlViewer.init(object : SqlDelightEnvironmentProvider() {
+                override fun getDriver() = sqlDelightDriver
+            })
+        }
+
+        override fun initRoom() {
+            val roomDatabase = AppDatabase.create(DatabaseBuilder().createBuilder())
+            DelightSqlViewer.init(object : RoomEnvironmentProvider() {
+                override fun getDriver() = roomDatabase
+            })
+        }
+    }
     Window(
         title = "Wender",
         resizable = false,
@@ -26,6 +41,6 @@ fun main(args: Array<String>) = application {
         ),
         onCloseRequest = ::exitApplication,
     ) {
-        App()
+        App(databaseInitializer = databaseInitializer)
     }
 }

@@ -1,6 +1,6 @@
 # Delight SQL Viewer
 
-**Delight SQL Viewer** is a Kotlin Multiplatform library for Android, iOS, and Desktop applications. It allows developers and testers to view, edit, add, and delete records in a [SQLDelight](https://github.com/cashapp/sqldelight)-based database directly within the application. This is particularly useful for debugging and QA purposes to quickly inspect and modify the app’s database state in real-time.
+**Delight SQL Viewer** is a Kotlin Multiplatform library for Android, iOS, and Desktop applications. It supports both [SQLDelight](https://github.com/cashapp/sqldelight) and [Room Multiplatform](https://developer.android.com/kotlin/multiplatform/room) databases. With version **2.0.0**, developers and testers can view, edit, add, and delete records directly within the app—making debugging and QA efficient by enabling real-time inspection and modification of your app’s database state.
 
 ## Screenshots
 
@@ -20,31 +20,30 @@
   <img src="content/screenshots/delete_rows.png" alt="delete_rows" width="120">
 </a>
 
-
 ## Features
 
-- **Multiplatform Support**: Works on Android, iOS, and Desktop targets.
-- **Database Inspection**: View, edit, add, and delete records in a SQLDelight database.
-- **App Shortcuts** (Android and iOS):
-    - Automatically adds a shortcut menu entry on Android and iOS for quick access (can be disabled if needed).
-- **Easy Integration**: Simply add the dependency to your shared module and initialize.
-- **Configurable for Debug/Release**: Quickly disable or substitute the library for release builds.
+- **Multiplatform Support:** Runs on Android, iOS, and Desktop.
+- **Dual Database Support:** Seamlessly work with both SQLDelight and Room databases.
+- **Database Inspection:** View, edit, add, and delete records directly from your app.
+- **App Shortcuts (Android and iOS):** Automatically adds a shortcut entry for quick access (configurable).
+- **Easy Integration:** Add the necessary dependencies and initialize in your platform-specific code.
+- **Configurable for Debug/Release:** For debug builds, include full functionality; for release builds, switch to a lightweight stub to reduce app size.
 
 ## Table of Contents
 
 1. [Installation](#installation)
 2. [Initialization](#initialization)
-    - [Android](#android)
-    - [iOS](#ios)
-    - [Desktop](#desktop)
+   - [Android](#android)
+   - [iOS](#ios)
+   - [Desktop](#desktop)
 3. [Launching the Viewer](#launching-the-viewer)
 4. [Shortcuts](#shortcuts)
-    - [Android Shortcut](#android-shortcut)
-    - [iOS Shortcut](#ios-shortcut)
-    - [Desktop](#desktop-shortcut)
+   - [Android Shortcut](#android-shortcut)
+   - [iOS Shortcut](#ios-shortcut)
+   - [Desktop](#desktop-shortcut)
 5. [Excluding the Library in Release Builds](#excluding-the-library-in-release-builds)
-    - [1. Use the Stub Library](#1-use-the-stub-library)
-    - [2. Omit Initialization and Launch](#2-omit-initialization-and-launch)
+   - [Using the Stub Library](#using-the-stub-library)
+   - [Omitting Initialization and Launch](#omitting-initialization-and-launch)
 6. [Contributing](#contributing)
 7. [License](#license)
 
@@ -58,68 +57,103 @@ Delight SQL Viewer is published to Maven Central. Add the dependency to your `sh
 // In shared/build.gradle.kts
 
 kotlin {
-    sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api("ru.bartwell.delightsqlviewer:library:1.0.0")
-            }
-        }
-    }
+   sourceSets {
+      val commonMain by getting {
+         dependencies {
+              api("ru.bartwell.delightsqlviewer:runtime:2.0.0")
+              api("ru.bartwell.delightsqlviewer:core:2.0.0")
+              // Choose the adapter based on your database:
+              api("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
+              // or
+              // api("ru.bartwell.delightsqlviewer:room-adapter:2.0.0")
+         }
+      }
+   }
 }
 ```
 
-For iOS, add the export statement in `framework {}` so it’s available in your iOS framework:
+For iOS, export the dependencies in your `framework {}` block to make them available in your iOS framework:
 
 ```kotlin
 // In shared/build.gradle.kts
 
 framework {
-    export("ru.bartwell.delightsqlviewer:library:1.0.0")
+     export("ru.bartwell.delightsqlviewer:runtime:2.0.0")
+     export("ru.bartwell.delightsqlviewer:core:2.0.0")
+     // Choose the adapter based on your database:
+     export("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
+     // or
+     // export("ru.bartwell.delightsqlviewer:room-adapter:2.0.0")
 }
 ```
 
+---
+
 ## Initialization
 
-Once the library is added, you need to initialize it in your platform-specific code with the appropriate environment provider. In each case, you must supply the `SqlDriver` you obtained from SQLDelight.
+After adding the appropriate dependencies, initialize Delight SQL Viewer in your platform-specific code by providing the corresponding environment provider along with the database driver.
 
 ### Android
 
+For **SQLDelight**:
+
 ```kotlin
-val sqlDriver: SqlDriver = /* SQLDelight driver */
-DelightSqlViewer.init(
-    object : AndroidEnvironmentProvider {
-        override fun getSqlDriver() = sqlDriver
-        override fun getContext() = this@MainActivity
-    }
-)
+DelightSqlViewer.init(object : SqlDelightEnvironmentProvider() {
+    override fun getDriver() = sqlDelightDriver
+    override fun getContext() = this@MainActivity
+})
 ```
 
-- The `AndroidEnvironmentProvider` requires the `SqlDriver` and an Android `Context`.
-- By default, the library will add a shortcut (long-press on the app icon) to launch the viewer.
+For **Room**:
+
+```kotlin
+DelightSqlViewer.init(object : RoomEnvironmentProvider() {
+    override fun getDriver() = roomDatabase
+    override fun getContext() = this@MainActivity
+})
+```
+
+*Note:* Both providers require an Android `Context` along with the respective database instance.
 
 ### iOS
 
+For **SQLDelight**:
+
 ```swift
-let sqlDriver = /* SQLDelight driver */
-let provider = IosEnvironmentProvider(sqlDriver: sqlDriver)
-DelightSqlViewer.shared.doInit(provider: provider)
+let provider = SqlDelightEnvironmentProvider(driver: sqlDriver)
+DelightSqlViewer.shared.doInit(provider: provider, isShortcutEnabled: true)
 ```
 
-- Use `IosEnvironmentProvider` with your `SqlDriver`.
-- The library will add a shortcut by default (long-press on the app icon), but you’ll need to handle the shortcut action in your `AppDelegate` or Scene delegate. See [iOS Shortcut](#ios-shortcut).
+For **Room**:
+
+```swift
+let provider = RoomEnvironmentProvider(driver: roomDatabase)
+DelightSqlViewer.shared.doInit(provider: provider, isShortcutEnabled: true)
+```
+
+*Note:* The `isShortcutEnabled` parameter determines whether a shortcut is added to the app icon.
 
 ### Desktop
 
+For **SQLDelight**:
+
 ```kotlin
-val sqlDriver: SqlDriver = /* SQLDelight driver */
-DelightSqlViewer.init(
-    object : DesktopEnvironmentProvider {
-        override fun getSqlDriver() = sqlDriver
-    }
-)
+DelightSqlViewer.init(object : SqlDelightEnvironmentProvider() {
+    override fun getDriver() = sqlDelightDriver
+})
+```
+
+For **Room**:
+
+```kotlin
+DelightSqlViewer.init(object : RoomEnvironmentProvider() {
+    override fun getDriver() = roomDatabase
+})
 ```
 
 - There is no built-in shortcut on Desktop. Simply call `DelightSqlViewer.launch()` from your own UI controls.
+
+---
 
 ## Launching the Viewer
 
@@ -141,16 +175,18 @@ Button("Launch viewer") {
 }
 ```
 
+---
+
 ## Shortcuts
 
 ### Android Shortcut
 
-By default, **Delight SQL Viewer** adds a shortcut to your app’s launcher icon, which appears upon a long-press. You can disable this in the initialization step by passing a second parameter `isShortcutEnabled = false`:
+By default, Delight SQL Viewer adds a shortcut to your app’s launcher icon (accessible via long-press). To disable it, pass `isShortcutEnabled = false` during initialization:
 
 ```kotlin
 DelightSqlViewer.init(
     object : AndroidEnvironmentProvider {
-        override fun getSqlDriver() = sqlDriver
+        override fun getDriver() = sqlDelightDriver // or roomDatabase for Room
         override fun getContext() = this@MainActivity
     },
     isShortcutEnabled = false
@@ -159,7 +195,7 @@ DelightSqlViewer.init(
 
 ### iOS Shortcut
 
-Similarly, on iOS the library adds a long-press shortcut on the app icon. To handle shortcuts correctly, you need to configure your `AppDelegate` (or `UISceneDelegate`). For example:
+On iOS, the library adds a shortcut on the app icon by default. To handle shortcut actions, configure your `AppDelegate` or `UISceneDelegate` as follows:
 
 ```swift
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -175,55 +211,76 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 ### Desktop Shortcut
 
-Shortcuts are not supported on Desktop. You must manually trigger the viewer using `DelightSqlViewer.launch()` wherever appropriate in your app.
+Shortcuts are not supported on Desktop. Use your UI controls to manually trigger the viewer.
+
+---
 
 ## Excluding the Library in Release Builds
 
-Since this library is typically only needed for internal testing or development, you may want to exclude it from release builds. There are two main approaches:
+Since the viewer is primarily for debugging and development, you may want to exclude it from release builds.
 
-### 1. Use the Stub Library
+### Using the Stub Library
 
-In your `shared/build.gradle.kts`, you can dynamically depend on the real library for debug builds and a stub library for release:
+For release builds, depend on the stub module instead of the full implementation:
 
 ```kotlin
 val isRelease = /* your logic to determine release vs. debug */
 
-if (isRelease) {
-    export("ru.bartwell.delightsqlviewer:stub:1.0.0")
-} else {
-    export("ru.bartwell.delightsqlviewer:library:1.0.0")
-}
-
-...
-
-if (isRelease) {
-    api("ru.bartwell.delightsqlviewer:stub:1.0.0")
-} else {
-    api("ru.bartwell.delightsqlviewer:library:1.0.0")
+framework {
+   if (isRelease) {
+       // Use the stub library for release builds.
+       export("ru.bartwell.delightsqlviewer:stub:2.0.0")
+   } else {
+       // Use the full implementation for debug builds.
+       export("ru.bartwell.delightsqlviewer:runtime:2.0.0")
+       export("ru.bartwell.delightsqlviewer:core:2.0.0")
+       // Choose the appropriate adapter:
+       export("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
+       // or
+       // export("ru.bartwell.delightsqlviewer:room-adapter:2.0.0")
+   }
 }
 ```
 
-This way, the release build does not include the actual implementation, reducing app size.
+And in your dependencies:
 
-### 2. Omit Initialization and Launch
+```kotlin
+dependencies {
+    if (isRelease) {
+        api("ru.bartwell.delightsqlviewer:stub:2.0.0")
+    } else {
+        api("ru.bartwell.delightsqlviewer:runtime:2.0.0")
+        api("ru.bartwell.delightsqlviewer:core:2.0.0")
+        // Choose the appropriate adapter:
+        api("ru.bartwell.delightsqlviewer:sqldelight-adapter:2.0.0")
+        // or
+        // api("ru.bartwell.delightsqlviewer:room-adapter:2.0.0")
+    }
+}
+```
 
-Alternatively, you can simply never call `DelightSqlViewer.init(...)` or `DelightSqlViewer.launch()` in release builds. However, the stub approach is usually preferred to avoid unnecessary code bloat.
+### Omitting Initialization and Launch
+
+Alternatively, you can simply avoid calling `DelightSqlViewer.init(...)` and `DelightSqlViewer.launch()` in release builds. However, using the stub dependency is generally preferred to prevent unnecessary code inclusion.
+
+---
 
 ## Contributing
 
-Contributions are welcome! Feel free to open an issue or create a pull request. Feedback and suggestions on how to improve the library are highly appreciated.
+Contributions are welcome! Please feel free to open an issue or submit a pull request with any improvements or suggestions.
+
+---
 
 ## License
 
 ```
-Copyright 2023 [Your Name]
+Copyright 2025 Artem Bazhanov
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
    http://www.apache.org/licenses/LICENSE-2.0
-
 ```
 
 Delight SQL Viewer is distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
