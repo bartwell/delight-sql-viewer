@@ -1,11 +1,13 @@
 package ru.bartwell.delightsqlviewer
 
-@Suppress("UnusedParameter", "EmptyFunctionBlock")
+import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
+
+@Suppress("UnusedParameter", "EmptyFunctionBlock", "UNUSED_PARAMETER", "RedundantSuppression")
 public object DelightSqlViewer {
 
-    public fun init(provider: EnvironmentProvider) {}
+    public fun init(provider: EnvironmentProvider<*>) {}
 
-    public fun init(provider: EnvironmentProvider, isShortcutEnabled: Boolean) {}
+    public fun init(provider: EnvironmentProvider<*>, isShortcutEnabled: Boolean) {}
 
     public fun launch() {}
 }
