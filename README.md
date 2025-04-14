@@ -37,6 +37,7 @@
    - [iOS](#ios)
    - [Desktop](#desktop)
 3. [Launching the Viewer](#launching-the-viewer)
+   - [Using a Custom Theme](#using-a-custom-theme)
 4. [Shortcuts](#shortcuts)
    - [Android Shortcut](#android-shortcut)
    - [iOS Shortcut](#ios-shortcut)
