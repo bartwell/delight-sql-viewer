@@ -175,6 +175,28 @@ Button("Launch viewer") {
 }
 ```
 
+#### Using a Custom Theme
+
+Starting with version **2.1.0**, you can specify a custom theme when launching the viewer. By default, `DelightSqlViewer.launch()` uses `Theme.Auto`, but you may also call:
+
+```kotlin
+DelightSqlViewer.launch(theme = Theme.Dark)
+// or
+DelightSqlViewer.launch(theme = Theme.Light)
+// or
+DelightSqlViewer.launch(theme = Theme.Custom(myColorScheme))
+```
+
+Theme.Custom takes a Material 3 ColorScheme, allowing you to tailor the viewer’s UI to match your app's design.
+
+For **iOS**, pass the chosen theme to the `launch(theme:)` method:
+
+```swift
+Button("Launch viewer in Dark theme") {
+    DelightSqlViewer.shared.launch(theme: Theme.Dark())
+}
+```
+
 ---
 
 ## Shortcuts
