@@ -1,20 +1,29 @@
 package ru.bartwell.delightsqlviewer
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import ru.bartwell.delightsqlviewer.core.component.RootComponent
 import ru.bartwell.delightsqlviewer.core.component.RootContent
+import ru.bartwell.delightsqlviewer.core.data.Theme
 
 @Composable
 internal fun App(rootComponent: RootComponent) {
-    MaterialTheme {
+    MaterialTheme(
+        colorScheme = DelightSqlViewer.theme.toColorScheme(),
+    ) {
         Scaffold(
             modifier = Modifier.fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
                 .systemBarsPadding()
                 .imePadding()
         ) {
@@ -24,4 +33,12 @@ internal fun App(rootComponent: RootComponent) {
             )
         }
     }
+}
+
+@Composable
+private fun Theme.toColorScheme(): ColorScheme = when (this) {
+    Theme.Auto -> if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
+    Theme.Dark -> darkColorScheme()
+    Theme.Light -> lightColorScheme()
+    is Theme.Custom -> scheme
 }
