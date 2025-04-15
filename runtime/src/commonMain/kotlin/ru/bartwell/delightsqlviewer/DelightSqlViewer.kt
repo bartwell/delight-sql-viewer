@@ -2,6 +2,7 @@ package ru.bartwell.delightsqlviewer
 
 import ru.bartwell.delightsqlviewer.core.DatabaseWrapper
 import ru.bartwell.delightsqlviewer.core.EnvironmentProvider
+import ru.bartwell.delightsqlviewer.core.data.Theme
 import ru.bartwell.delightsqlviewer.core.util.LaunchManager
 import ru.bartwell.delightsqlviewer.core.util.ShortcutManager
 import ru.bartwell.delightsqlviewer.core.util.id
@@ -9,6 +10,7 @@ import ru.bartwell.delightsqlviewer.core.util.id
 public object DelightSqlViewer {
 
     private var environmentProvider: EnvironmentProvider<*>? = null
+    internal var theme: Theme = Theme.Auto
 
     public fun init(provider: EnvironmentProvider<*>) {
         init(provider, true)
@@ -28,6 +30,11 @@ public object DelightSqlViewer {
     }
 
     public fun launch() {
+        launch(theme = Theme.Auto)
+    }
+
+    public fun launch(theme: Theme) {
+        this.theme = theme
         environmentProvider?.let { LaunchManager.launch(it) }
     }
 
