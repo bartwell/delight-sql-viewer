@@ -25,7 +25,7 @@
 - **Multiplatform Support:** Runs on Android, iOS, and Desktop.
 - **Dual Database Support:** Seamlessly work with both SQLDelight and Room databases.
 - **Database Inspection:** View, edit, add, and delete records directly from your app.
-- **App Shortcuts (Android and iOS):** Automatically adds a shortcut entry for quick access (configurable).
+- **App Shortcuts:** Automatically adds a shortcut entry for quick access (configurable).
 - **Easy Integration:** Add the necessary dependencies and initialize in your platform-specific code.
 - **Configurable for Debug/Release:** For debug builds, include full functionality; for release builds, switch to a lightweight stub to reduce app size.
 
@@ -152,7 +152,7 @@ DelightSqlViewer.init(object : RoomEnvironmentProvider() {
 })
 ```
 
-- There is no built-in shortcut on Desktop. Simply call `DelightSqlViewer.launch()` from your own UI controls.
+*Note:* The `isShortcutEnabled` parameter determines whether the “SQL Viewer” item is added to the Taskbar/Dock context menu.
 
 ---
 
@@ -208,11 +208,11 @@ By default, Delight SQL Viewer adds a shortcut to your app’s launcher icon (ac
 
 ```kotlin
 DelightSqlViewer.init(
-    object : AndroidEnvironmentProvider {
+    provider = object : SqlDelightEnvironmentProvider() {
         override fun getDriver() = sqlDelightDriver // or roomDatabase for Room
         override fun getContext() = this@MainActivity
     },
-    isShortcutEnabled = false
+    isShortcutEnabled = false,
 )
 ```
 
@@ -234,7 +234,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 ### Desktop Shortcut
 
-Shortcuts are not supported on Desktop. Use your UI controls to manually trigger the viewer.
+By default, Delight SQL Viewer adds a “SQL Viewer” item to your app’s Taskbar/Dock context menu. To disable it, pass `isShortcutEnabled = false` during initialization:
+
+```kotlin
+DelightSqlViewer.init(
+   provider = object : SqlDelightEnvironmentProvider() {
+        override fun getDriver() = sqlDelightDriver // or roomDatabase for Room
+    },
+    isShortcutEnabled = false,
+)
+```
 
 ---
 

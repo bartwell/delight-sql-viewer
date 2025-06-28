@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +45,14 @@ fun App(
 ) {
     var selectedDatabase by remember { mutableStateOf(Database.SqlDelight) }
     var selectedTheme by remember { mutableStateOf(AppTheme.Auto) }
+
+    LaunchedEffect(selectedDatabase) {
+        when (selectedDatabase) {
+            Database.SqlDelight -> databaseInitializer.initSqlDelight()
+            Database.Room -> databaseInitializer.initRoom()
+        }
+    }
+
     MaterialTheme(
         colorScheme = selectedTheme.getColorScheme(),
     ) {
@@ -70,10 +79,6 @@ fun App(
                     Spacer(modifier = Modifier.height(32.dp))
                     Button(
                         onClick = {
-                            when (selectedDatabase) {
-                                Database.SqlDelight -> databaseInitializer.initSqlDelight()
-                                Database.Room -> databaseInitializer.initRoom()
-                            }
                             DelightSqlViewer.launch(theme = selectedTheme.toLibraryTheme())
                         },
                         content = {
