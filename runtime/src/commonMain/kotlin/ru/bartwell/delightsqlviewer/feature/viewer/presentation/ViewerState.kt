@@ -11,7 +11,4 @@ internal data class ViewerState(
     val selectedRows: List<Long> = emptyList(),
     val deleteError: String? = null,
     val loadError: String? = null,
-) {
-    val visibleColumns: List<Column>
-        get() = columns.filter { !it.isRowId }
-}
+)

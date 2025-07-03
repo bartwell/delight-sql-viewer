@@ -12,6 +12,7 @@ import ru.bartwell.delightsqlviewer.core.mapper.StringSqlMapper
 
 internal class DefaultTablesListComponent(
     componentContext: ComponentContext,
+    private val queryClicked: () -> Unit,
     private val listItemClicked: (String) -> Unit,
 ) : TablesListComponent, ComponentContext by componentContext {
 
@@ -28,6 +29,8 @@ internal class DefaultTablesListComponent(
             .catch { _model.value = _model.value.copy(error = it.toString()) }
             .launchIn(coroutineScope())
     }
+
+    override fun onQueryClick() = queryClicked()
 
     override fun onListItemClicked(table: String) = listItemClicked(table)
 }

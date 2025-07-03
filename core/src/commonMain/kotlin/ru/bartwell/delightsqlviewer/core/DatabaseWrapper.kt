@@ -10,6 +10,7 @@ public abstract class DatabaseWrapper {
     public abstract fun updateSingle(table: String, id: Long, column: Column, value: String?): Flow<Unit>
     public abstract fun insert(table: String, values: Map<Column, String?>): Flow<Unit>
     public abstract fun delete(table: String, ids: List<Long>): Flow<Unit>
+    public abstract fun raw(sql: String): Flow<Unit>
 
     protected fun buildUpdateQuery(table: String, column: Column): String =
         "UPDATE $table SET ${column.name} = ? WHERE rowid = ?"

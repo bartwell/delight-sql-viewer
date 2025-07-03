@@ -93,6 +93,11 @@ public class SqlDelightWrapper(private val driver: SqlDriver) : DatabaseWrapper(
         }
         emit(Unit)
     }
+
+    override fun raw(sql: String): Flow<Unit> = flow {
+        driver.execute(identifier = null, sql = sql, parameters = 0)
+        emit(Unit)
+    }
 }
 
 @OptIn(ExperimentalStdlibApi::class)

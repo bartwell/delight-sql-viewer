@@ -6,5 +6,6 @@ import ru.bartwell.delightsqlviewer.core.component.Component
 internal interface TablesListComponent : Component {
     val model: Value<TablesListState>
 
+    fun onQueryClick()
     fun onListItemClicked(table: String)
 }
