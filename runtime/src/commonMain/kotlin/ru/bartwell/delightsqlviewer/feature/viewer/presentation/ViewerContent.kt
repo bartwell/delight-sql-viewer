@@ -51,7 +51,7 @@ internal fun ViewerContent(
             Table(
                 columns = state.columns,
                 rows = state.rows,
-                isDeleteMode = state.isDeleteMode,
+                isInSelectionMode = state.isDeleteMode,
                 selectedRows = state.selectedRows,
                 onCellClick = component::onCellClick,
                 onRowSelected = component::onRowSelected,

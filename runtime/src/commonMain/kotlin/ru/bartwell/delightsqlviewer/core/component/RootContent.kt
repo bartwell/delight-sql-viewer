@@ -7,6 +7,7 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import ru.bartwell.delightsqlviewer.feature.insert.presentation.InsertContent
+import ru.bartwell.delightsqlviewer.feature.query.presentation.QueryContent
 import ru.bartwell.delightsqlviewer.feature.structure.presentation.StructureContent
 import ru.bartwell.delightsqlviewer.feature.table.presentation.TablesListContent
 import ru.bartwell.delightsqlviewer.feature.update.presentation.UpdateContent
@@ -29,6 +30,11 @@ internal fun RootContent(
             )
 
             is RootComponent.Child.TablesList -> TablesListContent(
+                component = child.component,
+                modifier = Modifier.fillMaxSize(),
+            )
+
+            is RootComponent.Child.Query -> QueryContent(
                 component = child.component,
                 modifier = Modifier.fillMaxSize(),
             )

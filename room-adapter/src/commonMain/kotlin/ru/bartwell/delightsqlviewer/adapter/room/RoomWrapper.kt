@@ -1,6 +1,7 @@
 package ru.bartwell.delightsqlviewer.adapter.room
 
 import androidx.room.RoomDatabase
+import androidx.room.execSQL
 import androidx.room.useReaderConnection
 import androidx.room.useWriterConnection
 import androidx.sqlite.SQLiteStatement
@@ -73,6 +74,13 @@ public class RoomWrapper(internal val database: RoomDatabase) : DatabaseWrapper(
                     statement.step()
                 }
             }
+        }
+        emit(Unit)
+    }
+
+    override fun raw(sql: String): Flow<Unit> = flow {
+        database.useWriterConnection { connection ->
+            connection.execSQL(sql)
         }
         emit(Unit)
     }

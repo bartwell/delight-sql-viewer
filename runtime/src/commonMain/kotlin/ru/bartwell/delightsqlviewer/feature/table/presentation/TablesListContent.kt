@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.EditNote
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -38,6 +39,11 @@ internal fun TablesListContent(
             navigationIcon = {
                 IconButton(onClick = screenCloser) {
                     Icon(imageVector = Icons.Outlined.Close, contentDescription = "Cancel")
+                }
+            },
+            actions = {
+                IconButton(onClick = component::onQueryClick) {
+                    Icon(imageVector = Icons.Default.EditNote, contentDescription = "Custom query")
                 }
             }
         )

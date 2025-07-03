@@ -1,6 +1,7 @@
 package ru.bartwell.delightsqlviewer.feature.insert.presentation
 
 import ru.bartwell.delightsqlviewer.core.data.Column
+import ru.bartwell.delightsqlviewer.feature.insert.data.InsertValueType
 
 internal data class InsertState(
     val table: String,

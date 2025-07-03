@@ -1,4 +1,4 @@
-package ru.bartwell.delightsqlviewer.feature.viewer
+package ru.bartwell.delightsqlviewer.feature.viewer.extension
 
 import ru.bartwell.delightsqlviewer.core.data.Column
 

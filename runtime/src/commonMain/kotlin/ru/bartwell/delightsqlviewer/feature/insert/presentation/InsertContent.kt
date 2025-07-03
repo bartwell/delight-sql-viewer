@@ -36,6 +36,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.data.ColumnType
 import ru.bartwell.delightsqlviewer.core.presentation.ErrorAlert
+import ru.bartwell.delightsqlviewer.feature.insert.data.InsertValueType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

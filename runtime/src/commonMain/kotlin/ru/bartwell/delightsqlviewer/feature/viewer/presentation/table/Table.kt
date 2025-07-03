@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.min
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.data.Row
 import ru.bartwell.delightsqlviewer.core.extension.orNull
-import ru.bartwell.delightsqlviewer.feature.viewer.removeBuiltIn
+import ru.bartwell.delightsqlviewer.feature.viewer.extension.removeBuiltIn
 
 private val MAX_CELL_WIDTH = 200.dp
 private val CELL_PADDING = 8.dp
@@ -44,74 +44,110 @@ private val FIELD_TYPE_STYLE: TextStyle
 
 @Composable
 internal fun Table(
-    columns: List<Column>,
     rows: List<Row>,
-    isDeleteMode: Boolean,
-    selectedRows: List<Long>,
-    onCellClick: (column: Column, rowId: Long) -> Unit,
-    onRowSelected: (rowId: Long, isSelected: Boolean) -> Unit
+    columns: List<Column>? = null,
+    isInSelectionMode: Boolean = false,
+    selectedRows: List<Long> = emptyList(),
+    onCellClick: ((column: Column, rowId: Long) -> Unit)? = null,
+    onRowSelected: (rowId: Long, isSelected: Boolean) -> Unit = { _, _ -> },
 ) {
     val horizontalScrollState = rememberScrollState()
     val cellsWidths = calculateCellsWidths(columns, rows)
-    val visibleColumns = columns.removeBuiltIn()
+    val visibleColumns = columns?.removeBuiltIn()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .horizontalScroll(horizontalScrollState)
             .padding(16.dp),
     ) {
-        item {
-            Row(Modifier.background(MaterialTheme.colorScheme.primaryContainer)) {
-                if (isDeleteMode) {
-                    TableCell(
-                        title = "",
-                        subtitle = "",
-                        width = 48.dp,
-                        textColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-                for ((columnIndex, column) in visibleColumns.withIndex()) {
-                    TableCell(
-                        title = column.name,
-                        subtitle = column.type.name.lowercase(),
-                        width = cellsWidths[columnIndex],
-                        textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                }
+        visibleColumns?.let {
+            item {
+                TableCaption(
+                    visibleColumns = visibleColumns,
+                    cellsWidths = cellsWidths,
+                    isInSelectionMode = isInSelectionMode,
+                )
             }
         }
         items(rows.size) { index ->
-            val row = rows[index]
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min),
-            ) {
-                if (isDeleteMode) {
-                    Box(
-                        modifier = Modifier
-                            .width(48.dp)
-                            .fillMaxHeight()
-                            .border(1.dp, MaterialTheme.colorScheme.onBackground)
-                            .padding(horizontal = 4.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        val isChecked = selectedRows.contains(row.id)
-                        Checkbox(
-                            checked = isChecked,
-                            onCheckedChange = { checked -> onRowSelected(row.id, checked) },
-                        )
+            TableRow(
+                row = rows[index],
+                cellsWidths = cellsWidths,
+                isCellClickable = onCellClick != null,
+                isInSelectionMode = isInSelectionMode,
+                selectedRows = selectedRows,
+                onRowSelected = onRowSelected,
+                onCellClick = { cellIndex, rowId ->
+                    if (onCellClick != null && visibleColumns != null) {
+                        onCellClick(visibleColumns[cellIndex], rowId)
                     }
-                }
-                for (cell in row.data.withIndex()) {
-                    TableCell(
-                        title = cell.value.orNull(),
-                        onClick = { onCellClick(visibleColumns[cell.index], row.id) },
-                        width = cellsWidths[cell.index],
-                        textColor = MaterialTheme.colorScheme.onBackground
-                    )
-                }
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun TableRow(
+    row: Row,
+    cellsWidths: List<Dp>,
+    isCellClickable: Boolean,
+    isInSelectionMode: Boolean,
+    selectedRows: List<Long>,
+    onRowSelected: (Long, Boolean) -> Unit,
+    onCellClick: ((Int, Long) -> Unit)
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
+    ) {
+        if (isInSelectionMode) {
+            Box(
+                modifier = Modifier
+                    .width(48.dp)
+                    .fillMaxHeight()
+                    .border(1.dp, MaterialTheme.colorScheme.onBackground)
+                    .padding(horizontal = 4.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                val isChecked = selectedRows.contains(row.id)
+                Checkbox(
+                    checked = isChecked,
+                    onCheckedChange = { onRowSelected(row.id, it) },
+                )
             }
+        }
+        for (cell in row.data.withIndex()) {
+            TableCell(
+                title = cell.value.orNull(),
+                isClickable = isCellClickable,
+                onClick = { onCellClick(cell.index, row.id) },
+                width = cellsWidths[cell.index],
+                textColor = MaterialTheme.colorScheme.onBackground,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TableCaption(visibleColumns: List<Column>, cellsWidths: List<Dp>, isInSelectionMode: Boolean) {
+    Row(Modifier.background(MaterialTheme.colorScheme.primaryContainer)) {
+        if (isInSelectionMode) {
+            TableCell(
+                title = "",
+                subtitle = "",
+                width = 48.dp,
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
+        for ((columnIndex, column) in visibleColumns.withIndex()) {
+            TableCell(
+                title = column.name,
+                subtitle = column.type.name.lowercase(),
+                width = cellsWidths[columnIndex],
+                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            )
         }
     }
 }
@@ -121,7 +157,8 @@ private fun TableCell(
     title: String,
     width: Dp,
     textColor: Color,
-    onClick: (() -> Unit)? = null,
+    isClickable: Boolean = false,
+    onClick: () -> Unit = {},
     subtitle: String? = null
 ) {
     Box(
@@ -129,7 +166,7 @@ private fun TableCell(
             .width(width)
             .fillMaxHeight()
             .border(1.dp, MaterialTheme.colorScheme.onBackground)
-            .clickable(enabled = onClick != null, onClick = onClick ?: {}),
+            .clickable(enabled = isClickable, onClick = onClick),
     ) {
         Column(
             modifier = Modifier
@@ -157,23 +194,30 @@ private fun TableCell(
 }
 
 @Composable
-private fun calculateCellsWidths(columns: List<Column>, rows: List<Row>): MutableList<Dp> {
-    val result = mutableListOf<Dp>()
-    for (column in columns) {
-        val fieldNameWidth = column.name.calculateTextWidth()
-        val fieldTypeWidth = column.type
-            .name
-            .lowercase()
-            .calculateTextWidth(FIELD_TYPE_STYLE)
-        result.add(max(fieldNameWidth, fieldTypeWidth))
-    }
-    for (row in rows) {
-        for (cell in row.data.withIndex()) {
-            val cellWidth = cell.value.orNull().calculateTextWidth()
-            result[cell.index] = max(cellWidth, result[cell.index])
+private fun calculateCellsWidths(columns: List<Column>?, rows: List<Row>): List<Dp> {
+    val columnCount = columns?.size
+        ?: rows.firstOrNull()?.data?.size
+        ?: 0
+
+    val initialWidths: List<Dp> = columns
+        ?.map { column ->
+            max(
+                column.name.calculateTextWidth(),
+                column.type.name
+                    .lowercase()
+                    .calculateTextWidth(FIELD_TYPE_STYLE)
+            )
+        }
+        ?: List(columnCount) { 0.dp }
+
+    val resultWidths = rows.fold(initialWidths) { acc, row ->
+        acc.mapIndexed { index, currentMax ->
+            val text = row.data.getOrNull(index).orNull()
+            max(currentMax, text.calculateTextWidth())
         }
     }
-    return result
+
+    return resultWidths
 }
 
 @Composable

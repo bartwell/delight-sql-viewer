@@ -10,6 +10,7 @@ import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.feature.insert.presentation.DefaultInsertComponent
+import ru.bartwell.delightsqlviewer.feature.query.presentation.DefaultQueryComponent
 import ru.bartwell.delightsqlviewer.feature.structure.presentation.DefaultStructureComponent
 import ru.bartwell.delightsqlviewer.feature.table.presentation.DefaultTablesListComponent
 import ru.bartwell.delightsqlviewer.feature.update.presentation.DefaultUpdateComponent
@@ -45,9 +46,19 @@ internal class DefaultRootComponent(
         Config.TablesList -> RootComponent.Child.TablesList(
             DefaultTablesListComponent(
                 componentContext = componentContext,
+                queryClicked = { nav.pushNew(Config.Query) },
                 listItemClicked = { table ->
                     nav.pushNew(Config.Viewer(table))
                 }
+            )
+        )
+
+        Config.Query -> RootComponent.Child.Query(
+            DefaultQueryComponent(
+                componentContext = componentContext,
+                onFinished = {
+                    nav.pop()
+                },
             )
         )
 
@@ -106,6 +117,9 @@ internal class DefaultRootComponent(
     private sealed interface Config {
         @Serializable
         data object TablesList : Config
+
+        @Serializable
+        data object Query : Config
 
         @Serializable
         data class Viewer(val table: String) : Config

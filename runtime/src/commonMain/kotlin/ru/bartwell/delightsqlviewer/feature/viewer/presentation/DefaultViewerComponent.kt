@@ -12,7 +12,7 @@ import ru.bartwell.delightsqlviewer.core.component.Resumable
 import ru.bartwell.delightsqlviewer.core.data.Column
 import ru.bartwell.delightsqlviewer.core.mapper.ColumnsSqlMapper
 import ru.bartwell.delightsqlviewer.core.mapper.RowsSqlMapper
-import ru.bartwell.delightsqlviewer.feature.viewer.removeBuiltIn
+import ru.bartwell.delightsqlviewer.feature.viewer.extension.removeBuiltIn
 
 internal class DefaultViewerComponent(
     componentContext: ComponentContext,

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bartwell.delightsqlviewer.DelightSqlViewer
 import ru.bartwell.delightsqlviewer.core.data.Column
+import ru.bartwell.delightsqlviewer.feature.insert.data.InsertValueType
+import kotlin.collections.toMutableMap
 
 internal class DefaultInsertComponent(
     componentContext: ComponentContext,
