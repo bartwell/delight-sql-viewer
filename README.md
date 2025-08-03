@@ -1,5 +1,8 @@
 # Delight SQL Viewer
 
+> **⚠️ Deprecated:** Delight SQL Viewer is no longer actively maintained.  
+> For an improved, unified debugging experience — including database inspection, logging, network monitoring, and more — please migrate to [Kick: Kotlin Inspection & Control Kit](https://github.com/bartwell/kick).
+
 **Delight SQL Viewer** is a Kotlin Multiplatform library for Android, iOS, and Desktop applications. It supports both [SQLDelight](https://github.com/cashapp/sqldelight) and [Room Multiplatform](https://developer.android.com/kotlin/multiplatform/room) databases. With version **2.0.0**, developers and testers can view, edit, add, and delete records directly within the app—making debugging and QA efficient by enabling real-time inspection and modification of your app’s database state.
 
 ## Screenshots
